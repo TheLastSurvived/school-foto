@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+Все заказы
+{% endblock %}
+
+{% block main %}
+<div class="site-section-cover">
+    <div class="container">
+      <div class="row align-items-center text-center justify-content-center">
+        <div class="col-lg-6">
+          <h1 class="text-white mb-4">Все заказы</h1>
+          <p class="lead"></p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container py-5">
+    {%if active_user.root==1%}
+    <table class="table">
+       <thead>
+         <tr>
+           <th scope="col">#</th>
+           <th scope="col">Имя</th>
+           <th scope="col">Почта</th>
+           <th scope="col">Телефон</th>
+           <th scope="col">Услуга</th>
+           <th scope="col">Дата</th>
+           <th scope="col">#</th>
+         </tr>
+       </thead>
+       <tbody>
+          {%for el,el2,el3 in zip( order_user_list,order_prices_list, order_user)%}
+         <tr>
+           <td></td>
+           <td>{{el.name}}</td>
+           <td>{{el.email}}</td>
+           <td>{{el.phone_number}}</td>
+           <td>{{el2.title}}</td>
+           <td>{{el3.date.strftime('%d.%m.%Y %H:%M')}}</td>
+           <td><a href="/delete_order_admin/{{el3.id}}" class="btn btn-danger">Удалить</a></td>
+         </tr>
+         {%endfor%}
+         
+       </tbody>
+     </table>
+     {%endif%}
+ </div>
+
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}
+Блог
+{% endblock %}
+
+{% block main %}
+
+    
+    <div class="site-section-cover">
+      <div class="container">
+        <div class="row align-items-center text-center justify-content-center">
+          <div class="col-lg-6">
+            <h1 class="text-white mb-4">Блог</h1>
+            <p class="lead"></p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section">
+      <div class="container">
+
+<div class="row">
+  <div class="col-md-3">
+    <div class=" sidebar">
+      <div class="sidebar-box">
+        <div class="categories">
+          <h3>Категории</h3>
+          <li><a href="/blog" class="text-dark">Все</a></li>
+          {% for el in category %}
+          <li><a href="/blog?seach={{el.category}}" class="text-dark">{{el.category}}</a></li>
+          {%endfor%} 
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row">
+
+      {% for el in articles%}
+      <div class="col-md-6 mb-4">
+        <div class="post-entry-1 h-100">
+          <a href="/blog/{{el.id}}">
+            <img src="../static/images/blog/{{el.image_name}}" alt="Image" class="img-fluid">
+          </a>
+          <div class="post-entry-1-contents">
+            <h2><a href="/blog/{{el.id}}">{{el.title}}</a></h2>
+            <span class="meta d-inline-block mb-3 "> {{el.category}}</span>
+            <span class="float-right">{{el.date.strftime('%d.%m.%Y %H:%M')}}</span>
+          </div>
+        </div>
+      </div>
+      {%endfor%}                         
+
+    </div>
+  </div>
+
+
+</div>
+      </div>
+    </div>
+    
+    {% endblock %}  
+  

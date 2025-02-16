@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}
+Контакты
+{% endblock %}
+
+{% block main %}
+
+
+    
+    <div class="site-section-cover">
+      <div class="container">
+        <div class="row align-items-center text-center justify-content-center">
+          <div class="col-lg-6">
+            <h1 class="text-white mb-4">Контакты</h1>
+            <p class="lead"></p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="site-section bg-left-half">
+      <div class="container">
+
+        
+        <div class="row">
+          <div class="col-lg-8 mb-5" >
+            <form action="" method="post" enctype="multipart/form-data">
+              <div class="form-group row">
+                <div class="col-md-6 mb-4 mb-lg-0">
+                  <input type="text" class="form-control" placeholder="Имя">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" class="form-control" placeholder="Фамилия">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <input type="text" class="form-control" placeholder="Почта">
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-md-12">
+                  <textarea name="" id="" class="form-control" placeholder="Сообщение" cols="30" rows="10"></textarea>
+                </div>
+              </div>
+              <div class="form-group row">
+                <div class="col-md-6 mr-auto">
+                  <input type="submit" class="btn btn-block btn-dark text-white py-3 px-5" value="Отправить сообщение">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-4 ml-auto">
+            <div class="bg-white p-3 p-md-5">
+              <h3 class="text-black mb-4">Контактная информация</h3>
+              <ul class="list-unstyled footer-link">
+                <li class="d-block mb-3">
+                  <span class="d-block text-black">Адрес:</span>
+                  <span>Гродно, Курчатова 4</span></li>
+                <li class="d-block mb-3"><span class="d-block text-black">Телефон:</span><span>+375 29 1234567</span></li>
+                <li class="d-block mb-3"><span class="d-block text-black">Почта:</span><span>vipusk-foto@mail.com</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div> <!-- END .site-section -->
+    {% endblock %}  
+    
+ 

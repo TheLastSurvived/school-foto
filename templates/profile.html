@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+Мои заказы
+{% endblock %}
+
+{% block main %}
+<div class="site-section-cover">
+    <div class="container">
+      <div class="row align-items-center text-center justify-content-center">
+        <div class="col-lg-6">
+          <h1 class="text-white mb-4">Мои заказы</h1>
+          <p class="lead"></p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container py-5">
+  
+    <table class="table">
+       <thead>
+         <tr>
+           <th scope="col">#</th>
+           <th scope="col">Услуга</th>
+
+           <th scope="col">Дата и время</th>
+           <th scope="col">#</th>
+         </tr>
+       </thead>
+       <tbody>
+        {% if order_prices_list and  order_user%}
+          {%for el,el2 in zip( order_prices_list, order_user)%}
+         <tr>
+           <td></td>
+           <td>{{el.title}}</td>
+        
+           <td>{{el2.date.strftime('%d.%m.%Y %H:%M')}}</td>
+           <td><a href="/delete_order/{{el2.id}}" class="btn btn-danger">Удалить</a></td>
+         </tr>
+         {%endfor%}
+         {%else%}
+        
+         {%endif%}
+       </tbody>
+     </table>
+ </div>
+
+{% endblock %}
