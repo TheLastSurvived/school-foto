@@ -602,6 +602,8 @@ h5,
   width: 100%;
   padding: 1rem;
   position: absolute;
+  background-color: #ffff;
+  color: #000;
 }
 @media (max-width: 991.98px) {
   .site-navbar {
@@ -620,7 +622,7 @@ h5,
 }
 .site-navbar .site-logo a {
   text-transform: uppercase;
-  color: #fff;
+  color: #000000;
   font-family: "Poppins", sans-serif;
 }
 @media (max-width: 991.98px) {
@@ -651,15 +653,15 @@ h5,
   margin-left: 15px;
   margin-right: 15px;
   padding: 20px 0px;
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: rgba(0, 0, 0, 0.7) !important;
   display: inline-block;
   text-decoration: none !important;
 }
 .site-navbar .site-navigation .site-menu > li > a:hover {
-  color: #fff !important;
+  color: #8f8f8f !important;
 }
 .site-navbar .site-navigation .site-menu > li.active > a {
-  color: #fff !important;
+  color: #8f8f8f !important;
 }
 .site-navbar .site-navigation .site-menu .has-children {
   position: relative;
