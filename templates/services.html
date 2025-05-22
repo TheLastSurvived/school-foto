@@ -4,7 +4,11 @@
 {% endblock %}
 
 {% block main %}
-
+{{ ckeditor.load() }}
+{{ ckeditor.config(
+    filebrowserUploadUrl='/upload',
+    filebrowserUploadMethod='form'
+) }}
     
     <div class="site-section-cover">
       <div class="container">
@@ -18,6 +22,49 @@
       </div>
     </div>
 
+<!-- 
+    <div class="container my-3">
+        <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Добавить услугу
+      </button>
+
+      <div class="collapse" id="collapseExample">
+      <div class="card card-body my-3">
+        <form action="" method="post" enctype="multipart/form-data">
+          <div class="form-group row">
+            <div class="col-md-6 mb-4 mb-lg-0">
+              <input type="text" class="form-control" placeholder="Название *" name="title"
+                value="" required>
+            </div>
+            <div class="col-md-6">
+              <select name="category" class="form-control" id="" required>
+              <option value="4 класс" disabled selected>Категории</option>
+                <option value="4 класс">4 класс</option>
+                <option value="9, 11 классы">9, 11 классы</option>
+            </select>
+            </div>
+            
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12">
+              <label for="exampleInputEmail1" class="form-label">Изображение записи *</label>
+              <input type="file" id="exampleInputEmail1" class="form-control" placeholder="" name="image"
+                accept=".jpg,.jpeg,.png,.gif">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col">
+             {{ ckeditor.create() }}
+            </div>
+          </div>
+        <div class="col-md-6 mr-auto">
+          <input type="submit" class="btn btn-block btn-dark text-white" value="Применить">
+        </div>  
+        </form>    
+      </div>
+    </div>
+    </div>
+-->
 
     <div class="site-section">
       <div class="container">
@@ -56,13 +103,15 @@
         </button>
       </div>
       <div class="modal-body">
+        {% autoescape false %}
           {{el.text}}
+        {% endautoescape %}
         <hr>
         {%if 'name' in session and active_user %}
         <form action="" method="post">
           <div class="form-group invisible">
 
-            <input type="text" value="{{el.id}}"  id="id" class="form-control" name="id" required>
+            <input type="text" value="{{el.id}}"  id="id" name="id" required>
           </div>
 
           <div class="form-group">

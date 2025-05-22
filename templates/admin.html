@@ -19,34 +19,77 @@
 
   <div class="container py-5">
     {%if active_user.root==1%}
-    <table class="table">
-       <thead>
-         <tr>
-           <th scope="col">#</th>
-           <th scope="col">Имя</th>
-           <th scope="col">Почта</th>
-           <th scope="col">Телефон</th>
-           <th scope="col">Услуга</th>
-           <th scope="col">Дата</th>
-           <th scope="col">#</th>
-         </tr>
-       </thead>
-       <tbody>
-          {%for el,el2,el3 in zip( order_user_list,order_prices_list, order_user)%}
-         <tr>
-           <td></td>
-           <td>{{el.name}}</td>
-           <td>{{el.email}}</td>
-           <td>{{el.phone_number}}</td>
-           <td>{{el2.title}}</td>
-           <td>{{el3.date.strftime('%d.%m.%Y %H:%M')}}</td>
-           <td><a href="/delete_order_admin/{{el3.id}}" class="btn btn-danger">Удалить</a></td>
-         </tr>
-         {%endfor%}
-         
-       </tbody>
-     </table>
-     {%endif%}
- </div>
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Список всех заказов</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th scope="col" width="5%">#</th>
+                            <th scope="col">Имя</th>
+                            <th scope="col">Почта</th>
+                            <th scope="col">Телефон</th>
+                            <th scope="col">Услуга</th>
+                            <th scope="col">Дата</th>
+                            <th scope="col">Статус</th>
+                            <th scope="col" width="15%">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for el,el2,el3 in zip(order_user_list,order_prices_list, order_user)%}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{el.name}}</td>
+                            <td>{{el.email}}</td>
+                            <td>{{el.phone_number}}</td>
+                            <td>
+                                <strong>{{el2.title}}</strong><br>
+                                <small class="text-muted">{{el2.description|default('', true)}}</small>
+                            </td>
+                            <td>{{el3.date.strftime('%d.%m.%Y %H:%M')}}</td>
+                           
+                              <td>
+                                {% if el3.status %}
+                                <span class="badge badge-success">Оплачено</span>
+                                {% else %}
+                                <span class="badge badge-warning">Ожидает оплаты</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/delete_order_admin/{{el3.id}}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить этот заказ?')">
+                                    Удалить
+                                </a>
+                            </td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-white text-muted">
+            Всего заказов: {{ order_user_list|length }}
+        </div>
+    </div>
+    {%endif%}
+</div>
+
+<style>
+    .table thead th {
+        border-top: none;
+        font-weight: 500;
+    }
+    .card {
+        border: none;
+        border-radius: 0.5rem;
+        overflow: hidden;
+    }
+    .badge {
+        font-weight: 500;
+        padding: 0.35em 0.65em;
+    }
+</style>
 
 {% endblock %}

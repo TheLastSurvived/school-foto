@@ -10,6 +10,7 @@ from sqlalchemy.sql.expression import func
 import json
 import uuid
 from hashlib import md5
+from cloudipsp import Api, Checkout
 
 
 
@@ -113,6 +114,7 @@ class Orders(db.Model):
     phone = db.Column(db.String(100))
     date = db.Column(db.DateTime, unique=True)
     id_users = db.Column(db.Integer, db.ForeignKey('user.id'))
+    status = db.Column(db.Integer, default=0)
 
     def __repr__(self):
         return 'Orders %r' % self.id 
@@ -139,6 +141,24 @@ admin.add_view(OrdersView(Orders, db.session))
 def index():
     articles = Articles.query.order_by(func.random()).limit(5).all()
     return render_template("index.html", articles=articles)
+
+
+
+@app.route('/initiate_payment/<int:id>')
+def initiate_payment(id):
+    order = Orders.query.get(id)
+    order.status = 1
+    db.session.commit()
+    api = Api(merchant_id=1396424,
+          secret_key='test')
+    checkout = Checkout(api=api)
+    data = {
+        "currency": "USD",
+        "amount": 10000
+    }
+    url = checkout.url(data).get('checkout_url')
+    return redirect(url)
+
 
 @app.route('/blog')
 def blog():
@@ -413,6 +433,37 @@ def inject_user():
 def logout():
     session.pop('name', None)
     return redirect('/')
+
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    f = request.files.get('upload')
+    # Проверка расширения файла
+    extension = f.filename.split('.')[-1].lower()
+    if extension not in ['jpg', 'gif', 'png', 'jpeg']:
+        return upload_fail(message='Только изображения!')
+    
+    # Сохранение файла
+    filename = secure_filename(f.filename)
+    pic_name = str(uuid.uuid4()) + "_" + filename
+    f.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+    
+    # Возвращаем URL изображения
+    url = url_for('static', filename='images/blog/' + pic_name, _external=True)
+    return upload_success(url=url)
+
+def upload_success(url, message=''):
+    return json.dumps({
+        'uploaded': 1,
+        'fileName': url.split('/')[-1],
+        'url': url
+    })
+
+def upload_fail(message=''):
+    return json.dumps({
+        'uploaded': 0,
+        'error': {'message': message}
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)
