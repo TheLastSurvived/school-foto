@@ -115,6 +115,7 @@ class Orders(db.Model):
     date = db.Column(db.DateTime, unique=True)
     id_users = db.Column(db.Integer, db.ForeignKey('user.id'))
     status = db.Column(db.Integer, default=0)
+    tarif = db.Column(db.String(100))
 
     def __repr__(self):
         return 'Orders %r' % self.id 
@@ -153,8 +154,8 @@ def initiate_payment(id):
           secret_key='test')
     checkout = Checkout(api=api)
     data = {
-        "currency": "USD",
-        "amount": 10000
+        "currency": "KRW",
+        "amount": int(order.tarif + "00")
     }
     url = checkout.url(data).get('checkout_url')
     return redirect(url)
@@ -195,6 +196,7 @@ def blog_single(id):
 def services():
     services = Servises.query.all()
     orders = Orders.query.all()
+    today = datetime.now()
     if request.method == 'POST':
         try:
             today = datetime.now()
@@ -203,17 +205,19 @@ def services():
             phone = request.form.get('phone')
             date = request.form.get('date')
             time = request.form.get('time')
+            tarif = request.form.get('tarif')
             full = date + "-" + time
+            datetime_object = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
             result = (today - datetime.strptime(date, '%Y-%m-%d')).total_seconds()
-            if result>0:
+            if datetime_object < today:
                 flash("Дата ("+full+") выбрана неправильно, так как этот день уже прошел!", category="bad")
                 return redirect(url_for("services"))
             datetime_object = datetime.strptime(full, '%Y-%m-%d-%H:%M')
             total_user = User.query.filter_by(email=session['name']).first()
-            order = Orders(id_servises=id,id_users = total_user.id, name=total_user.email,phone=total_user.phone_number,date=datetime_object)
+            order = Orders(id_servises=id,id_users = total_user.id,tarif=tarif, name=total_user.email,phone=total_user.phone_number,date=datetime_object)
             db.session.add(order)
             db.session.commit()
-            flash("Вы записались!", category="ok")
+            flash("Вы записались! Ожидайте ответ оператора.", category="ok")
             return redirect(url_for("services"))
         except:
             flash("Запись на это время невозможна!", category="bad")

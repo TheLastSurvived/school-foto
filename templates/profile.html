@@ -29,6 +29,7 @@
                             <th scope="col" width="5%">№</th>
                             <th scope="col">Услуга</th>
                             <th scope="col">Дата и время</th>
+                            <th scope="col">Тариф</th>
                             <th scope="col">Статус</th>
                             <th scope="col" width="20%">Действия</th>
                         </tr>
@@ -42,6 +43,8 @@
                                 <small class="text-muted">{{ el.description|default('', true) }}</small>
                             </td>
                             <td>{{ el2.date.strftime('%d.%m.%Y %H:%M') }}</td>
+                            <td> {%if el2.tarif == '70'%} Лайт({{el2.tarif}} руб.) {%elif el2.tarif == '80'%} Стандарт({{el2.tarif}} руб.) {%elif el2.tarif == '90'%} Премиум({{el2.tarif}} руб.){%elif el2.tarif == '100'%} Макс({{el2.tarif}} руб.){%endif%}</td>
+
                             <td>
                                 {% if el2.status %}
                                 <span class="badge badge-success">Оплачено</span>
@@ -52,7 +55,7 @@
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
                                     {% if not el2.status %}
-<a href="/initiate_payment/{{el2.id}}" target="_blank" class="btn btn-outline-success" onclick="setTimeout(function() { location.reload(); }, 400);" title="Оплатить">Оплатить</a>
+<a href="/initiate_payment/{{el2.id}}" target="_blank" class="btn btn-outline-success"  title="Оплатить">Оплатить</a>
                                       
                                     {% endif %}
                                     <a href="/delete_order/{{el2.id}}" class="btn btn-outline-danger" title="Удалить" onclick="return confirm('Вы уверены, что хотите отменить этот заказ?')">

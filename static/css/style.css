@@ -1187,6 +1187,22 @@ h5,
   color: #3b4eda;
 }
 
+.service-29191 {
+  position: relative;
+}
+
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
 .service-29191 h3 {
   font-size: 20px;
   font-weight: 900;
@@ -1450,4 +1466,88 @@ h5,
 
 .dark-color{
   background-color: #000;
+}
+
+
+/* Testimonials */
+.testimonial {
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial p {
+    font-style: italic;
+    color: #555;
+    position: relative;
+    padding-left: 20px;
+}
+
+.testimonial p:before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 24px;
+    line-height: 1;
+    color: #3b4eda;
+}
+
+
+/* Pricing table styles */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table {
+  min-width: 800px;
+}
+
+.table thead th {
+  vertical-align: middle;
+  background-color: #000;
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 14px;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: rgba(0,0,0,0.02);
+}
+
+.table tbody tr:hover {
+  background-color: rgba(59, 78, 218, 0.05);
+}
+
+.table td, .table th {
+  padding: 15px;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+}
+
+.table td.align-middle {
+  vertical-align: middle;
+}
+
+.icon-check {
+  color: #28a745;
+  font-size: 1.2rem;
+}
+
+.icon-close {
+  color: #dc3545;
+  font-size: 1.2rem;
+}
+
+.alert-info {
+  background-color: rgba(59, 78, 218, 0.1);
+  border-color: rgba(59, 78, 218, 0.2);
+  color: #000;
 }
