@@ -30,6 +30,7 @@
                             <th scope="col">Услуга</th>
                             <th scope="col">Дата и время</th>
                             <th scope="col">Тариф</th>
+                            <th scope="col">Количество</th>
                             <th scope="col">Статус</th>
                             <th scope="col" width="20%">Действия</th>
                         </tr>
@@ -44,7 +45,7 @@
                             </td>
                             <td>{{ el2.date.strftime('%d.%m.%Y %H:%M') }}</td>
                             <td> {%if el2.tarif == '70'%} Лайт({{el2.tarif}} руб.) {%elif el2.tarif == '80'%} Стандарт({{el2.tarif}} руб.) {%elif el2.tarif == '90'%} Премиум({{el2.tarif}} руб.){%elif el2.tarif == '100'%} Макс({{el2.tarif}} руб.){%endif%}</td>
-
+                            <td>{{el2.count}}</td>
                             <td>
                                 {% if el2.status %}
                                 <span class="badge badge-success">Оплачено</span>

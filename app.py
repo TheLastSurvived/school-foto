@@ -116,6 +116,7 @@ class Orders(db.Model):
     id_users = db.Column(db.Integer, db.ForeignKey('user.id'))
     status = db.Column(db.Integer, default=0)
     tarif = db.Column(db.String(100))
+    count = db.Column(db.Integer)
 
     def __repr__(self):
         return 'Orders %r' % self.id 
@@ -155,7 +156,7 @@ def initiate_payment(id):
     checkout = Checkout(api=api)
     data = {
         "currency": "KRW",
-        "amount": int(order.tarif + "00")
+        "amount": int(order.tarif + "00") * order.count
     }
     url = checkout.url(data).get('checkout_url')
     return redirect(url)
@@ -206,6 +207,7 @@ def services():
             date = request.form.get('date')
             time = request.form.get('time')
             tarif = request.form.get('tarif')
+            count = request.form.get('count')
             full = date + "-" + time
             datetime_object = datetime.strptime(f"{date} {time}", "%Y-%m-%d %H:%M")
             result = (today - datetime.strptime(date, '%Y-%m-%d')).total_seconds()
@@ -214,7 +216,7 @@ def services():
                 return redirect(url_for("services"))
             datetime_object = datetime.strptime(full, '%Y-%m-%d-%H:%M')
             total_user = User.query.filter_by(email=session['name']).first()
-            order = Orders(id_servises=id,id_users = total_user.id,tarif=tarif, name=total_user.email,phone=total_user.phone_number,date=datetime_object)
+            order = Orders(id_servises=id,id_users = total_user.id,count=count,tarif=tarif, name=total_user.email,phone=total_user.phone_number,date=datetime_object)
             db.session.add(order)
             db.session.commit()
             flash("Вы записались! Ожидайте ответ оператора.", category="ok")
