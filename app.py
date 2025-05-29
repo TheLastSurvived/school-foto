@@ -102,6 +102,7 @@ class Comments(db.Model):
     message = db.Column(db.Text)
     date = db.Column(db.DateTime, default=datetime.now)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
+    status = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return 'Comment %r' % self.id 
@@ -124,7 +125,7 @@ class Orders(db.Model):
 class CommentsView(ModelView):
     column_display_pk = True 
     column_hide_backrefs = False
-    column_list = ['id','name','message','date','article_id']
+    column_list = ['id','name','message','date','article_id', 'status']
 
 class OrdersView(ModelView):
     column_display_pk = True 
@@ -283,6 +284,7 @@ def delete_article(id):
     obj = Articles.query.filter_by(id=id).first()
     db.session.delete(obj)
     db.session.commit()
+    flash("Запись удалена!", category="bad")
     return redirect('/blog')
 
 @app.route('/delete-comment/<int:id>/<int:article_id>')
@@ -290,7 +292,18 @@ def delete_comment(id, article_id):
     obj = Comments.query.filter_by(id=id).first()
     db.session.delete(obj)
     db.session.commit()
+    flash("Комментарий удален!", category="bad")
     return redirect(url_for("blog_single",id=article_id))
+
+
+@app.route('/change-comment-status/<int:id>/<int:article_id>')
+def change_comment(id, article_id):
+    obj = Comments.query.filter_by(id=id).first()
+    obj.status = not obj.status
+    db.session.commit()
+    flash("Вы изменили статус комментария!", category="ok")
+    return redirect(url_for("blog_single",id=article_id))
+
 
 @app.route('/add-img',methods=['GET','POST'])
 def add_img():
