@@ -82,12 +82,12 @@
         <div class="row ">
 
           {%for el in services%}
-          <div class="col-md-4 mb-3 ">
-            <div class="service-29191">
+          <div class="col-md-4 mb-3 " >
+            <div class="service-29191" >
               {%if el.title ==  'Пчёлка' or el.title ==  'Doodle' or el.title ==  'Black Grunge' or el.title ==  'LUX' or el.title ==  'Сплит' or el.title ==  'Freedom'  %}
               <span class="sale-badge">Хит продаж</span>
               {%endif%}
-              <img src="../static/images/services/{{el.image_name}}" class="mb-3" width="100%" height="100%" alt="">
+              <img src="../static/images/services/{{el.image_name}}" class="mb-3" width="100%" height="100%" alt="" style="max-height: 250px; object-fit:cover; object-position: center;">
               <div class="d-flex justify-content-between align-content-center">
                 <h3 class="mb-3">{{el.title}}</h3>
                 <!-- Button trigger modal -->
