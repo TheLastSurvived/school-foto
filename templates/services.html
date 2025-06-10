@@ -16,7 +16,11 @@
           <div class="col-lg-6">
             <h1 class="text-white mb-4">Услуги</h1>
             <p class="lead"></p>
-            
+              <select id="categoryFilter" class="form-control">
+                <option value="all">Все категории</option>
+                <option value="4 класс">4 класс</option>
+                <option value="9, 11 классы">9, 11 классы</option>
+            </select>
           </div>
         </div>
       </div>
@@ -246,5 +250,24 @@ function phoneInputHandler() {
 
 
     </script>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const filterSelect = document.getElementById('categoryFilter');
+        
+        filterSelect.addEventListener('change', function() {
+            const selectedCategory = this.value;
+            const serviceItems = document.querySelectorAll('.col-md-4.mb-3');
+            
+            serviceItems.forEach(item => {
+                const itemCategory = item.querySelector('small').textContent.trim();
+                
+                if (selectedCategory === 'all' || itemCategory === selectedCategory) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
     {% endblock %}
