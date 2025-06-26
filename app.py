@@ -387,7 +387,7 @@ def contacts():
         message = Contacts(name=name,surname=surname,email=email,text=text)
         db.session.add(message)
         db.session.commit()
-        flash("Сообщение отправлено!", category="ok")
+        flash("Сообщение отправлено! Оператор обработает его в ближайшее время.", category="ok")
         return redirect(url_for("contacts"))
     
     return render_template("contact.html")
