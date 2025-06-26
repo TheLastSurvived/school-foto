@@ -120,7 +120,18 @@ class Orders(db.Model):
     count = db.Column(db.Integer)
 
     def __repr__(self):
-        return 'Orders %r' % self.id 
+        return 'Orders %r' % self.id
+
+
+class Contacts(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    name = db.Column(db.String(100))
+    surname = db.Column(db.String(100))
+    email = db.Column(db.String(100))
+    text = db.Column(db.Text)
+
+    def __repr__(self):
+        return 'Contacts %r' % self.id
 
 class CommentsView(ModelView):
     column_display_pk = True 
@@ -139,6 +150,7 @@ admin.add_view(CommentsView(Comments, db.session))
 admin.add_view(ModelView(User, db.session))
 admin.add_view(ModelView(Servises, db.session))
 admin.add_view(OrdersView(Orders, db.session))
+admin.add_view(ModelView(Contacts, db.session))
 
 @app.route('/')
 def index():
@@ -366,6 +378,18 @@ def auth():
 
 @app.route('/contacts', methods=['GET', 'POST'])
 def contacts():
+
+    if request.method == 'POST':
+        name = request.form.get('name')
+        surname = request.form.get('surname')
+        email = request.form.get('email')
+        text = request.form.get('text')
+        message = Contacts(name=name,surname=surname,email=email,text=text)
+        db.session.add(message)
+        db.session.commit()
+        flash("Сообщение отправлено!", category="ok")
+        return redirect(url_for("contacts"))
+    
     return render_template("contact.html")
 
 

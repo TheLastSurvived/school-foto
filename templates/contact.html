@@ -22,29 +22,35 @@
 
     <div class="site-section bg-left-half">
       <div class="container">
-
+        {% with messages = get_flashed_messages(True) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <p class="flash {{category}}">{{message}}</p>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
         
         <div class="row">
           <div class="col-lg-8 mb-5" >
             <form action="" method="post" enctype="multipart/form-data">
               <div class="form-group row">
                 <div class="col-md-6 mb-4 mb-lg-0">
-                  <input type="text" class="form-control" placeholder="Имя">
+                  <input type="text" class="form-control" placeholder="Имя" name="name" required>
                 </div>
                 <div class="col-md-6">
-                  <input type="text" class="form-control" placeholder="Фамилия">
+                  <input type="text" class="form-control" placeholder="Фамилия" name="surname" required>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <input type="text" class="form-control" placeholder="Почта">
+                  <input type="text" class="form-control" placeholder="Почта" name="email" required>
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <textarea name="" id="" class="form-control" placeholder="Сообщение" cols="30" rows="10"></textarea>
+                  <textarea  id="" class="form-control" placeholder="Сообщение" cols="30" rows="10" name="text" required></textarea>
                 </div>
               </div>
               <div class="form-group row">
